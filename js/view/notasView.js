@@ -29,30 +29,35 @@ class notasView {
 
         // Create button for adding another input
         this.addInputButton = this.createElement('button');
-        this.addInputButton.textContent = 'Agregar otro input';
+        this.addInputButton.textContent = 'Agregar materia';
 
         // Create button for finalizar
         this.finalizarButton = this.createElement('button');
         this.finalizarButton.textContent = 'Finalizar';
 
         this.form.append(this.inputMateria, this.addInputButton, this.finalizarButton);
-        this.inputsContainer.append(this.inputMateria);
+        //this.inputsContainer.append(this.inputMateria);
 
         // Append title, description, and form
-        this.app.append(this.title, this.description, this.form);
+        this.app.append(this.title, this.description, this.form, this.inputMateria);
 
         this._initLocalListeners();
-
+        this.displayMateriasList();
     }
 
     _initLocalListeners() {
         // Add input for another materia
         this.addInputButton.addEventListener('click', (event) => {
             const materia = this.inputMateria.value;
+            console.log('Binding add input button', this.inputMateria);
+            console.log('Botón:', this.addInputButton);
+            console.log('Input materia:', this.inputMateria);
             if (materia !== '') {
                 this.materiasList.push(materia);
                 this.inputMateria.value = ''; // Limpiar input
                 this.displayMateriasList();
+            } else {
+                alert('Debes ingresar un nombre de materia.');
             }
         });
 
@@ -113,6 +118,7 @@ class notasView {
             primerParcialLabel, primerParcialInput,
             SegundoParcialLabel, SegundoParcialInput
         );
+        this.app.append(this.inputsContainer);
     }
 
     displayMultipleMateriasInputs() {
@@ -171,5 +177,21 @@ class notasView {
 
     _resetInput() {
         this.input.value = '';
+    }
+    getMateria() {
+        const materia = this.inputMateria.value.trim(); // Eliminar espacios en blanco al inicio y al final
+        if (materia === '') {
+            alert('Debes ingresar un nombre de materia.');
+        }
+        return materia;
+    }
+    bindAddInput(handler) {
+        this.addInputButton.addEventListener('click', handler);
+    }
+    bindFinalizar(handler) {
+        this.finalizarButton.addEventListener('click', handler);
+    }
+    getMateriasList() {
+        return this.materiasList;
     }
 }

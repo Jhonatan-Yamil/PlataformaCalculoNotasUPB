@@ -4,6 +4,7 @@ class notasModel{
     }
     addMateria(materia) {
         this.materiasList.push(materia);
+        console.log('Materia agregadaaaaaaaa:', materia);
       }
     
     getMateriasList() {

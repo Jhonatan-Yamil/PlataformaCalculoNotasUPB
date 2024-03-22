@@ -6,11 +6,14 @@ class notasControler{
         this.view.bindAddInput(this.handleAddInput.bind(this));
         this.view.bindFinalizar(this.handleFinalizar.bind(this));
     }
-    handleAddInput(materia) {
-        // Agregar materia al Modelo
-        this.model.addMateria(materia);
-        // Actualizar la vista con la nueva lista de materias
-        this.view.displayMateriasList();
+    handleAddInput() {
+        const materia = this.view.getMateria();
+        if (materia) {
+            this.model.addMateria(materia); // Agregar materia al modelo
+            this.view.materiasList = this.model.getMateriasList();  
+            this.view.displayMateriasList(); // Actualizar la vista con la nueva lista de materias
+            console.log('Materia agregada:', materia);
+        }
     }
     handleFinalizar() {
         if (this.model.getMateriasList().length > 0) {
