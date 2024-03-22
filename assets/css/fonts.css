@@ -1,0 +1,16 @@
+.app-title{
+    text-align: center;
+    color: white;
+    font-family: Arial, sans-serif; 
+    font-size: 2em;
+}
+.description {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-size: 1em;
+    margin-top: 20px; /* Espacio entre el título y la descripción */
+    text-align: center; /* Centrar el texto */
+    position: relative;
+   
+}
+
