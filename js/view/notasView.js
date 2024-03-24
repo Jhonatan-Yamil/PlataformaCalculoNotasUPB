@@ -22,7 +22,7 @@ class notasView {
         this.materiasList = [];
 
         // Create input for materia
-        this.inputMateria = this.createElement('input');
+        this.inputMateria = this.createElement('input', 'inputMateria');
         this.inputMateria.type = 'text';
         this.inputMateria.placeholder = 'Nombre de la materia';
         this.inputMateria.name = 'materia';
@@ -35,11 +35,16 @@ class notasView {
         this.finalizarButton = this.createElement('button');
         this.finalizarButton.textContent = 'Finalizar';
 
+        // Set up form event listener
+        this.form.addEventListener('submit', (event) => {
+            event.preventDefault();
+        });
+
         this.form.append(this.inputMateria, this.addInputButton, this.finalizarButton);
         //this.inputsContainer.append(this.inputMateria);
 
         // Append title, description, and form
-        this.app.append(this.title, this.description, this.form, this.inputMateria);
+        this.app.append(this.title, this.description, this.form);
 
         this._initLocalListeners();
         this.displayMateriasList();
@@ -77,13 +82,22 @@ class notasView {
         while (this.inputsContainer.firstChild) {
             this.inputsContainer.removeChild(this.inputsContainer.firstChild);
         }
-
-        // Mostrar lista de materias
-        this.materiasList.forEach((materia) => {
-            const materiaElement = this.createElement('div');
-            materiaElement.textContent = materia;
-            this.inputsContainer.append(materiaElement);
+        this.materiasList.forEach(materia => {
+            const listItem = document.createElement('li');
+            listItem.textContent = materia;
+            listItem.addEventListener('click', () => {
+                this.selectedMateria = materia;
+                this.displayMateriaDetails();
+            });
+            this.list.appendChild(listItem);
         });
+    
+        // If there are no materias, display a message
+        if (this.materiasList.length === 0) {
+            const noMateriasMessage = document.createElement('li');
+            noMateriasMessage.textContent = 'No hay materias.';
+            this.list.appendChild(noMateriasMessage);
+        }
     }
 
     displaySingleMateriaInputs() {
@@ -176,7 +190,7 @@ class notasView {
     }
 
     _resetInput() {
-        this.input.value = '';
+        this.inputMateria.value = '';
     }
     getMateria() {
         const materia = this.inputMateria.value.trim(); // Eliminar espacios en blanco al inicio y al final

@@ -12,7 +12,10 @@ class notasControler{
             this.model.addMateria(materia); // Agregar materia al modelo
             this.view.materiasList = this.model.getMateriasList();  
             this.view.displayMateriasList(); // Actualizar la vista con la nueva lista de materias
+            this.view._resetInput();
             console.log('Materia agregada:', materia);
+        } else {
+            alert('Debes ingresar un nombre de materia válido.');
         }
     }
     handleFinalizar() {

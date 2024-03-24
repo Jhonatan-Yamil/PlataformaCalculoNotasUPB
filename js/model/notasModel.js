@@ -10,4 +10,5 @@ class notasModel{
     getMateriasList() {
         return this.materiasList;
     }
+    //ToDo, Hacer la conexion a base de datos y la logica para las notas
 }
