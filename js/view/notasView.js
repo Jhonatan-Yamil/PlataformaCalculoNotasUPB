@@ -54,9 +54,6 @@ class notasView {
         // Add input for another materia
         this.addInputButton.addEventListener('click', (event) => {
             const materia = this.inputMateria.value;
-            console.log('Binding add input button', this.inputMateria);
-            console.log('Botón:', this.addInputButton);
-            console.log('Input materia:', this.inputMateria);
             if (materia !== '') {
                 this.materiasList.push(materia);
                 this.inputMateria.value = ''; // Limpiar input
@@ -87,16 +84,15 @@ class notasView {
             listItem.textContent = materia;
             listItem.addEventListener('click', () => {
                 this.selectedMateria = materia;
-                this.displayMateriaDetails();
             });
-            this.list.appendChild(listItem);
+            this.inputsContainer.appendChild(listItem);
         });
     
         // If there are no materias, display a message
         if (this.materiasList.length === 0) {
             const noMateriasMessage = document.createElement('li');
             noMateriasMessage.textContent = 'No hay materias.';
-            this.list.appendChild(noMateriasMessage);
+            this.inputsContainer.appendChild(noMateriasMessage);
         }
     }
 
@@ -168,6 +164,7 @@ class notasView {
         this.inputsContainer.append(
             notaDeseadaLabel, notaDeseadaInput
         );
+        this.app.append(this.inputsContainer);
     }
     //Create element with or without CSS class
     createElement(tag, className) {

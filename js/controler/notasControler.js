@@ -4,6 +4,7 @@ class notasControler{
         this.view = view;
 
         this.view.bindAddInput(this.handleAddInput.bind(this));
+        this.view.materiasList = this.model.getMateriasList();
         this.view.bindFinalizar(this.handleFinalizar.bind(this));
     }
     handleAddInput() {
@@ -19,11 +20,12 @@ class notasControler{
         }
     }
     handleFinalizar() {
-        if (this.model.getMateriasList().length > 0) {
+        if (this.model.getMateriasList().length > 1) {
             // Mostrar inputs para notas
+            console.log("estas en multiple");
             this.view.displayMultipleMateriasInputs();
         } else {
-            alert('Debes agregar al menos una materia.');
+            this.view.displaySingleMateriaInputs();
         }
     }
 
