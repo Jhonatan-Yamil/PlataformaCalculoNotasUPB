@@ -27,6 +27,12 @@ class notasView {
         this.inputMateria.placeholder = 'Nombre de la materia';
         this.inputMateria.name = 'materia';
 
+        // Bind createElement
+        this.createElement = this.createElement.bind(this);
+
+        // Append inputMateria to inputsContainer
+        this.inputsContainer.appendChild(this.inputMateria);
+
         // Create button for adding another input
         this.addInputButton = this.createElement('button');
         this.addInputButton.textContent = 'Agregar materia';
@@ -46,34 +52,11 @@ class notasView {
         // Append title, description, and form
         this.app.append(this.title, this.description, this.form);
 
-        this._initLocalListeners();
+       // this._initLocalListeners();
         this.displayMateriasList();
     }
 
-    _initLocalListeners() {
-        // Add input for another materia
-        this.addInputButton.addEventListener('click', (event) => {
-            const materia = this.inputMateria.value;
-            if (materia !== '') {
-                this.materiasList.push(materia);
-                this.inputMateria.value = ''; // Limpiar input
-                this.displayMateriasList();
-            } else {
-                alert('Debes ingresar un nombre de materia.');
-            }
-        });
-
-        // Finalizar button click
-        this.finalizarButton.addEventListener('click', (event) => {
-            if (this.materiasList.length === 1) {
-                // Mostrar una materia con 3 inputs
-                this.displaySingleMateriaInputs();
-            } else if (this.materiasList.length > 1) {
-                // Mostrar lista de materias con inputs
-                this.displayMultipleMateriasInputs();
-            }
-        });
-    }
+  
     displayMateriasList() {
         // Limpiar lista de materias antes de mostrarla
         while (this.inputsContainer.firstChild) {
@@ -191,6 +174,7 @@ class notasView {
     }
     getMateria() {
         const materia = this.inputMateria.value.trim(); // Eliminar espacios en blanco al inicio y al final
+        console.log("La materia es ", materia);
         if (materia === '') {
             alert('Debes ingresar un nombre de materia.');
         }
