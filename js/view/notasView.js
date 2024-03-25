@@ -145,11 +145,18 @@ class notasView {
             notaMateriaLabel.textContent = 'Nota materia:';
             const notaMateriaInput = this.createElement('input');
             notaMateriaInput.type = 'number';
+            notaMateriaInput.id = `nota-materia-${index}`;
+
+            const cantidadCreditosInput = this.createElement('input');
+            cantidadCreditosInput.type = 'number';
+            cantidadCreditosInput.placeholder = 'Cantidad de créditos';
+            cantidadCreditosInput.id = `cantidad-creditos-${index}`;
+
 
             // Agregar los elementos al contenedor
             this.inputsContainer.append(
                 materiaTitle,
-                notaMateriaLabel, notaMateriaInput
+                notaMateriaLabel, notaMateriaInput, cantidadCreditosInput
             );
         });
 
@@ -158,23 +165,48 @@ class notasView {
         notaDeseadaLabel.textContent = 'Nota deseada:';
         const notaDeseadaInput = this.createElement('input');
         notaDeseadaInput.type = 'number';
+        const cantidadCreditosProximaInput = this.createElement('input');
+        cantidadCreditosProximaInput.type = 'number';
+        cantidadCreditosProximaInput.placeholder = 'Créditos proxima materia';
 
         // Crear y configurar el botón
-        const calcularButton = this.createElement('button');
-        calcularButton.textContent = 'Calcular';
+        const calcularButtonMultiple = this.createElement('button');
+        calcularButtonMultiple.textContent = 'Calcular';
+
+        calcularButtonMultiple.addEventListener('click', () => {
+            let notaTotal = 0;
+            let creditosTotal = 0;
+
+            this.materiasList.forEach((materia, index) => {
+                const notaMateriaInput = document.querySelector(`#nota-materia-${index}`);
+                const cantidadCreditosInput = document.querySelector(`#cantidad-creditos-${index}`);
+
+                const prod = parseFloat(notaMateriaInput.value) * parseFloat(cantidadCreditosInput.value);
+                creditosTotal = creditosTotal + parseFloat(cantidadCreditosInput.value);
+                notaTotal = notaTotal + prod;
+            })
+            const notaRequerida = (parseFloat(notaDeseadaInput.value) * (creditosTotal + parseFloat(cantidadCreditosProximaInput.value)) - notaTotal) / parseFloat(cantidadCreditosProximaInput.value);
+
+            alert(`La nota de tu proxima materia necesaria para obtener una nota de ${notaDeseadaInput.value} en tu semestre es: ${notaRequerida.toFixed(2)}`);
+        })
 
         const centerContainer = this.createElement('div');
         centerContainer.style.textAlign = 'center';
         centerContainer.style.marginTop = '20px';
-        centerContainer.append(calcularButton);
-
+        centerContainer.append(notaDeseadaLabel, notaDeseadaInput, cantidadCreditosProximaInput);
+        
+        const centerContainer2 = this.createElement('div');
+        centerContainer2.style.textAlign = 'center';
+        centerContainer2.style.marginTop = '20px';
+        centerContainer2.append(calcularButtonMultiple);
 
         // Agregar el input de la nota deseada al contenedor
         this.inputsContainer.append(
-            notaDeseadaLabel, notaDeseadaInput,centerContainer
+            centerContainer, centerContainer2
         );
         this.app.append(this.inputsContainer);
     }
+
     //Create element with or without CSS class
     createElement(tag, className) {
         const element = document.createElement(tag);
