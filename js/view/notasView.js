@@ -52,11 +52,11 @@ class notasView {
         // Append title, description, and form
         this.app.append(this.title, this.description, this.form);
 
-       // this._initLocalListeners();
+        // this._initLocalListeners();
         this.displayMateriasList();
     }
 
-  
+
     displayMateriasList() {
         // Limpiar lista de materias antes de mostrarla
         while (this.inputsContainer.firstChild) {
@@ -70,7 +70,7 @@ class notasView {
             });
             this.inputsContainer.appendChild(listItem);
         });
-    
+
         // If there are no materias, display a message
         if (this.materiasList.length === 0) {
             const noMateriasMessage = document.createElement('li');
@@ -104,12 +104,28 @@ class notasView {
         const SegundoParcialInput = this.createElement('input');
         SegundoParcialInput.type = 'number';
 
+        // Crear y configurar el botón
+        const calcularButtonSingle = this.createElement('button');
+        calcularButtonSingle.textContent = 'Calcular';
+
+        calcularButtonSingle.addEventListener('click', () => {
+            const notaDeseada = parseFloat(notaDeseadaInput.value);
+            const primerParcial = parseFloat(primerParcialInput.value);
+            const segundoParcial = parseFloat(SegundoParcialInput.value);
+            const notaTercerParcial = (notaDeseada - (primerParcial * 0.3) - (segundoParcial * 0.3)) / 0.4;
+            alert(`La nota mínima necesaria en el tercer parcial es: ${notaTercerParcial.toFixed(2)} puntos`);
+        });
+        const centerContainer = this.createElement('div');
+        centerContainer.style.textAlign = 'center';
+        centerContainer.style.marginTop = '20px';
+        centerContainer.append(calcularButtonSingle);
+
         // Agregar los elementos al contenedor
         this.inputsContainer.append(
             materiaTitle,
             notaDeseadaLabel, notaDeseadaInput,
             primerParcialLabel, primerParcialInput,
-            SegundoParcialLabel, SegundoParcialInput
+            SegundoParcialLabel, SegundoParcialInput, centerContainer
         );
         this.app.append(this.inputsContainer);
     }
@@ -143,9 +159,19 @@ class notasView {
         const notaDeseadaInput = this.createElement('input');
         notaDeseadaInput.type = 'number';
 
+        // Crear y configurar el botón
+        const calcularButton = this.createElement('button');
+        calcularButton.textContent = 'Calcular';
+
+        const centerContainer = this.createElement('div');
+        centerContainer.style.textAlign = 'center';
+        centerContainer.style.marginTop = '20px';
+        centerContainer.append(calcularButton);
+
+
         // Agregar el input de la nota deseada al contenedor
         this.inputsContainer.append(
-            notaDeseadaLabel, notaDeseadaInput
+            notaDeseadaLabel, notaDeseadaInput,centerContainer
         );
         this.app.append(this.inputsContainer);
     }
@@ -174,7 +200,6 @@ class notasView {
     }
     getMateria() {
         const materia = this.inputMateria.value.trim(); // Eliminar espacios en blanco al inicio y al final
-        console.log("La materia es ", materia);
         if (materia === '') {
             alert('Debes ingresar un nombre de materia.');
         }
