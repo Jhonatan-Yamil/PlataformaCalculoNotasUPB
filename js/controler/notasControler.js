@@ -21,7 +21,6 @@ class notasControler{
     handleFinalizar() {
         if (this.model.getMateriasList().length > 1) {
             // Mostrar inputs para notas
-            console.log("estas en multiple");
             this.view.displayMultipleMateriasInputs();
         } else {
             this.view.displaySingleMateriaInputs();
